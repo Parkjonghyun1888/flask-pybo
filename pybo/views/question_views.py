@@ -86,6 +86,10 @@ def vote(question_id):
     _question = Question.query.get_or_404(question_id)
     if g.user == _question.user:
         flash('본인이 작성한 글은 추천할수 없습니다')
+
+    elif g.user in _question.voter:
+        flash('이미 이 글을 추천하셨습니다.')
+        
     else:
         _question.voter.append(g.user)
         db.session.commit()
